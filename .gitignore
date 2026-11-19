@@ -1,0 +1,22 @@
+# build outputs (every project/chNN and examples/chNN uses build/)
+build/
+*.o
+*.d
+*.elf
+*.bin
+*.img
+*.lst
+
+# QEMU and screenshot leftovers
+*.ppm
+mon.sock
+serial.log
+serial.raw
+qemu.log
+qemu.err
+
+# editors and tools
+__pycache__/
+*.pyc
+.gdb_history
+/scratch*/

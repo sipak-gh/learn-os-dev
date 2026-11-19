@@ -1,0 +1,15 @@
+run hello
+run count count
+run snoop
+run priv
+spawn spin
+ps
+vm 7
+sleep 200
+echo the shell still answers
+kill 7
+wait 7
+run ping pong
+vm 99
+run nosuch
+poweroff

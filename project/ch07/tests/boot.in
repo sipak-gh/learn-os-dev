@@ -1,0 +1,13 @@
+mem
+heap
+alloc 100
+alloc 5000
+alloc 24
+heap
+free 0xd0000010
+free 0xd0000010
+free 0xd0000080
+heap
+alloc 64
+free 0x1234
+poweroff

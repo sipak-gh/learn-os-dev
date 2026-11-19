@@ -1,0 +1,90 @@
+sprout: boot sector, loading stage 2
+sprout: stage 2 loaded, jumping to it
+sprout: stage 2 running at 0x8000
+sprout: E820 memory map: 6 entries, 130559 KiB usable
+sprout: loading kernel from LBA 17 to 0x10000
+sprout: A20 line already enabled
+sprout: entering protected mode
+sprout: protected mode; copying kernel to 0x100000
+sprout 0.9
+kernel: running at 0x00100000, booted from drive 80
+memory map (6 entries from E820):
+  0000000000000000-000000000009fbff  usable
+  000000000009fc00-000000000009ffff  reserved
+  00000000000f0000-00000000000fffff  reserved
+  0000000000100000-0000000007fdffff  usable
+  0000000007fe0000-0000000007ffffff  reserved
+  00000000fffc0000-00000000ffffffff  reserved
+usable RAM: 130559 KiB (127 MiB)
+frames: 32176 of 32224 free (128704 KiB), 4 KiB each, 00200000-07fe0000
+paging: on; RAM identity-mapped up to 07fe0000 except page 0, kernel code read-only
+heap: kmalloc from 0xd0000000
+interrupts on: timer 100 Hz, keyboard (IRQ 1), COM1 input (IRQ 4)
+tasks: round robin, 50 ms time slice; the shell is task 1
+user mode: programs run in ring 3 at 0x40000000, system calls via int 0x80
+type help for a list of commands
+sprout> run hello
+hello from ring 3
+task 2 (hello) exited with status 0
+sprout> run count count
+count 3: ring 3, n is at 0x40001000
+count 3: n = 3
+count 4: ring 3, n is at 0x40001000
+count 4: n = 4
+count 3: n = 6
+count 4: n = 8
+count 3: n = 9
+count 4: n = 12
+task 3 (count) exited with status 9
+task 4 (count) exited with status 12
+sprout> run snoop
+snoop: write(1, 0x50000000, 16) = -EFAULT
+snoop: write(1, 0x00100000, 16) = -EFAULT
+snoop: reading 0x00100000 myself
+page fault: user read at 00100000: page is kernel-only
+task 5 (snoop) killed at eip 400000f8
+task 5 (snoop) was killed
+sprout> run priv
+priv: trying cli
+exception 13 (general protection), error code 0
+task 6 (priv) killed at eip 40000096
+task 6 (priv) was killed
+sprout> spawn spin
+task 7 (spin) started
+sprout> ps
+  ID  STATE     RING  KERNEL STACK       NAME
+   0  ready        0  boot stack         idle
+   1  running      0  d0000050-d000204f  shell
+   7  ready        3  d0002098-d0004097  spin
+sprout> vm 7
+  virtual            physical        size  access
+  00001000-000fffff  00001000    1020 KiB  rw kernel
+  00100000-00107fff  00100000      32 KiB  r- kernel
+  00108000-07fdffff  00108000  129888 KiB  rw kernel
+  40000000-40000fff  00235000       4 KiB  r- user
+  7fffc000-7fffcfff  00237000       4 KiB  rw user
+  7fffd000-7fffffff  00239000      12 KiB  rw user
+  d0000000-d0003fff  00230000      16 KiB  rw kernel
+  d0004000-d0005fff  0023c000       8 KiB  rw kernel
+  d0006000-d0007fff  00248000       8 KiB  rw kernel
+sprout> sleep 200
+sprout> echo the shell still answers
+the shell still answers
+sprout> kill 7
+sprout> wait 7
+task 7 (spin) was killed
+sprout> run ping pong
+ping 1
+pong 1
+ping 2
+pong 2
+ping 3
+pong 3
+task 8 (ping) exited with status 0
+task 9 (pong) exited with status 0
+sprout> vm 99
+vm: no task 99
+sprout> run nosuch
+nosuch: no such program (programs: ping pong tick tock hog hello count snoop priv spin)
+sprout> poweroff
+powering off

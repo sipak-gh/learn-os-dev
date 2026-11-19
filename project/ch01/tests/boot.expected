@@ -1,0 +1,3 @@
+sprout: hello from the boot sector
+sprout: BIOS boot drive 0x80
+sprout: halting

@@ -1,0 +1,13 @@
+sprout: boot sector, loading stage 2
+sprout: stage 2 loaded, jumping to it
+sprout: stage 2 running at 0x8000
+sprout: E820 memory map (6 entries)
+  base                length              type
+  0x0000000000000000  0x000000000009fc00  1 usable
+  0x000000000009fc00  0x0000000000000400  2 reserved
+  0x00000000000f0000  0x0000000000010000  2 reserved
+  0x0000000000100000  0x0000000007ee0000  1 usable
+  0x0000000007fe0000  0x0000000000020000  2 reserved
+  0x00000000fffc0000  0x0000000000040000  2 reserved
+sprout: usable memory: 130559 KiB
+sprout: stage 2 done, halting

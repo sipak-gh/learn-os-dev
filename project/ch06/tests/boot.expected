@@ -1,0 +1,53 @@
+sprout: boot sector, loading stage 2
+sprout: stage 2 loaded, jumping to it
+sprout: stage 2 running at 0x8000
+sprout: E820 memory map: 6 entries, 130559 KiB usable
+sprout: loading kernel from LBA 17 to 0x10000
+sprout: A20 line already enabled
+sprout: entering protected mode
+sprout: protected mode; copying kernel to 0x100000
+sprout 0.6
+kernel: running at 0x00100000, booted from drive 80
+memory map (6 entries from E820):
+  0000000000000000-000000000009fbff  usable
+  000000000009fc00-000000000009ffff  reserved
+  00000000000f0000-00000000000fffff  reserved
+  0000000000100000-0000000007fdffff  usable
+  0000000007fe0000-0000000007ffffff  reserved
+  00000000fffc0000-00000000ffffffff  reserved
+usable RAM: 130559 KiB (127 MiB)
+interrupts on: timer 100 Hz, keyboard (IRQ 1), COM1 input (IRQ 4)
+type help for a list of commands
+sprout> help
+  help            list the commands
+  echo     WORDS  print the words
+  version         print the kernel version
+  mem             print the memory map
+  uptime          time since the timer started
+  sleep    MS     wait MS milliseconds
+  clear           clear the screen
+  crash           divide by zero
+  reboot          restart the machine
+  poweroff        turn the machine off (QEMU)
+sprout> echo hello,   world
+hello, world
+sprout> version
+sprout 0.6
+sprout> sleep 500
+sprout> ecoh  ho typo fixed
+typo fixed
+sprout> frobnicate
+frobnicate: unknown command (try help)
+sprout> sleep
+usage: sleep MS (at most 60000)
+sprout> mem
+memory map (6 entries from E820):
+  0000000000000000-000000000009fbff  usable
+  000000000009fc00-000000000009ffff  reserved
+  00000000000f0000-00000000000fffff  reserved
+  0000000000100000-0000000007fdffff  usable
+  0000000007fe0000-0000000007ffffff  reserved
+  00000000fffc0000-00000000ffffffff  reserved
+usable RAM: 130559 KiB (127 MiB)
+sprout> poweroff
+powering off

@@ -1,0 +1,19 @@
+sprout: boot sector, loading stage 2
+sprout: stage 2 loaded, jumping to it
+sprout: stage 2 running at 0x8000
+sprout: E820 memory map: 6 entries, 130559 KiB usable
+sprout: loading kernel from LBA 17 to 0x10000
+sprout: A20 line already enabled
+sprout: entering protected mode
+sprout: protected mode; copying kernel to 0x100000
+sprout 0.4
+kernel: running at 0x00100000, booted from drive 80
+memory map (6 entries from E820):
+  0000000000000000-000000000009fbff  usable
+  000000000009fc00-000000000009ffff  reserved
+  00000000000f0000-00000000000fffff  reserved
+  0000000000100000-0000000007fdffff  usable
+  0000000007fe0000-0000000007ffffff  reserved
+  00000000fffc0000-00000000ffffffff  reserved
+usable RAM: 130559 KiB (127 MiB)
+nothing more to do yet: halting

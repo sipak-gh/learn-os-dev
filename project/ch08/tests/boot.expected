@@ -1,0 +1,76 @@
+sprout: boot sector, loading stage 2
+sprout: stage 2 loaded, jumping to it
+sprout: stage 2 running at 0x8000
+sprout: E820 memory map: 6 entries, 130559 KiB usable
+sprout: loading kernel from LBA 17 to 0x10000
+sprout: A20 line already enabled
+sprout: entering protected mode
+sprout: protected mode; copying kernel to 0x100000
+sprout 0.8
+kernel: running at 0x00100000, booted from drive 80
+memory map (6 entries from E820):
+  0000000000000000-000000000009fbff  usable
+  000000000009fc00-000000000009ffff  reserved
+  00000000000f0000-00000000000fffff  reserved
+  0000000000100000-0000000007fdffff  usable
+  0000000007fe0000-0000000007ffffff  reserved
+  00000000fffc0000-00000000ffffffff  reserved
+usable RAM: 130559 KiB (127 MiB)
+frames: 32192 of 32224 free (128768 KiB), 4 KiB each, 00200000-07fe0000
+paging: on; RAM identity-mapped up to 07fe0000 except page 0, kernel code read-only
+heap: kmalloc from 0xd0000000
+interrupts on: timer 100 Hz, keyboard (IRQ 1), COM1 input (IRQ 4)
+tasks: round robin, 50 ms time slice; the shell is task 1
+type help for a list of commands
+sprout> ps
+  ID  STATE     STACK              NAME
+   0  ready     boot stack         idle
+   1  running   d0000048-d0002047  shell
+sprout> run ping pong
+ping 1
+pong 1
+ping 2
+pong 2
+ping 3
+pong 3
+task 2 (ping) exited with status 0
+task 3 (pong) exited with status 0
+sprout> run tick tock
+tick 1
+tock 1
+tick 2
+tick 3
+tock 2
+tick 4
+task 4 (tick) exited with status 0
+task 5 (tock) exited with status 0
+sprout> spawn hog
+task 6 (hog) started
+sprout> ps
+  ID  STATE     STACK              NAME
+   0  ready     boot stack         idle
+   1  running   d0000048-d0002047  shell
+   6  ready     d0002088-d0004087  hog
+sprout> sleep 200
+sprout> echo the shell still answers
+the shell still answers
+sprout> kill 6
+sprout> ps
+  ID  STATE     STACK              NAME
+   0  ready     boot stack         idle
+   1  running   d0000048-d0002047  shell
+   6  zombie    d0002088-d0004087  hog
+sprout> wait 6
+task 6 (hog) was killed
+sprout> ps
+  ID  STATE     STACK              NAME
+   0  ready     boot stack         idle
+   1  running   d0000048-d0002047  shell
+sprout> kill 0
+kill: cannot kill task 0
+sprout> wait 1
+wait: cannot wait for task 1
+sprout> run nosuch
+nosuch: no such program (programs: ping pong tick tock hog)
+sprout> poweroff
+powering off

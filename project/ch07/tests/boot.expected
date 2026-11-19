@@ -1,0 +1,65 @@
+sprout: boot sector, loading stage 2
+sprout: stage 2 loaded, jumping to it
+sprout: stage 2 running at 0x8000
+sprout: E820 memory map: 6 entries, 130559 KiB usable
+sprout: loading kernel from LBA 17 to 0x10000
+sprout: A20 line already enabled
+sprout: entering protected mode
+sprout: protected mode; copying kernel to 0x100000
+sprout 0.7
+kernel: running at 0x00100000, booted from drive 80
+memory map (6 entries from E820):
+  0000000000000000-000000000009fbff  usable
+  000000000009fc00-000000000009ffff  reserved
+  00000000000f0000-00000000000fffff  reserved
+  0000000000100000-0000000007fdffff  usable
+  0000000007fe0000-0000000007ffffff  reserved
+  00000000fffc0000-00000000ffffffff  reserved
+usable RAM: 130559 KiB (127 MiB)
+frames: 32192 of 32224 free (128768 KiB), 4 KiB each, 00200000-07fe0000
+paging: on; RAM identity-mapped up to 07fe0000 except page 0, kernel code read-only
+heap: kmalloc from 0xd0000000
+interrupts on: timer 100 Hz, keyboard (IRQ 1), COM1 input (IRQ 4)
+type help for a list of commands
+sprout> mem
+memory map (6 entries from E820):
+  0000000000000000-000000000009fbff  usable
+  000000000009fc00-000000000009ffff  reserved
+  00000000000f0000-00000000000fffff  reserved
+  0000000000100000-0000000007fdffff  usable
+  0000000007fe0000-0000000007ffffff  reserved
+  00000000fffc0000-00000000ffffffff  reserved
+usable RAM: 130559 KiB (127 MiB)
+frames: 32190 of 32224 free (128760 KiB), 4 KiB each, 00200000-07fe0000
+sprout> heap
+heap at 0xd0000000, 4 KiB mapped
+0 blocks: 0 bytes in use, 0 free
+sprout> alloc 100
+kmalloc(100) = 0xd0000010
+sprout> alloc 5000
+kmalloc(5000) = 0xd0000080
+sprout> alloc 24
+kmalloc(24) = 0xd0001410
+sprout> heap
+heap at 0xd0000000, 12 KiB mapped
+  0xd0000010     104 bytes  in use
+  0xd0000080    5000 bytes  in use
+  0xd0001410      24 bytes  in use
+  0xd0001430    3944 bytes  free
+4 blocks: 5128 bytes in use, 3944 free
+sprout> free 0xd0000010
+sprout> free 0xd0000010
+free: d0000010 is not a block from kmalloc
+sprout> free 0xd0000080
+sprout> heap
+heap at 0xd0000000, 12 KiB mapped
+  0xd0000010    5112 bytes  free
+  0xd0001410      24 bytes  in use
+  0xd0001430    3944 bytes  free
+3 blocks: 24 bytes in use, 9056 free
+sprout> alloc 64
+kmalloc(64) = 0xd0000010
+sprout> free 0x1234
+free: 00001234 is not a block from kmalloc
+sprout> poweroff
+powering off

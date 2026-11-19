@@ -1,0 +1,24 @@
+# gdbinit — gdb's setup for sprout (Chapter 10).
+#
+#   make debug     terminal 1: QEMU stops before the first instruction and
+#                  waits for gdb on localhost:1234
+#   make gdb       terminal 2: gdb -q -x tools/gdbinit
+#
+# Then, for example: break kmain, continue, bt, info registers, x/8i $pc.
+
+set confirm off
+set pagination off
+set disassembly-flavor intel
+
+# The kernel's symbols and debug info. It runs at the addresses it was
+# linked for, so gdb needs no offset. For a user program, add its symbols
+# too: add-symbol-file build/user/count.elf
+file build/kernel.elf
+
+# Before the kernel runs, the CPU is in 16-bit real mode, but gdb still
+# disassembles 32-bit code (set architecture i8086 does not help with
+# QEMU). To read the boot sector, dump it and use ndisasm:
+#   dump binary memory build/mem.bin 0x7c00 0x7c20
+#   shell ndisasm -b 16 -o 0x7c00 build/mem.bin
+
+target remote localhost:1234

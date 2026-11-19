@@ -1,0 +1,15 @@
+ps
+run ping pong
+run tick tock
+spawn hog
+ps
+sleep 200
+echo the shell still answers
+kill 6
+ps
+wait 6
+ps
+kill 0
+wait 1
+run nosuch
+poweroff
